@@ -25,7 +25,7 @@ Take a screenshot of your interaction showing:
 
 Save your screenshot in the `screenshots` folder and update the file name below.
 
-![Task 1 Screenshot](screenshots/task-1-chatgpt.png)
+![Task 1 Screenshot](screenshots/chatgpt.png)
 
 
 Replace `task-1-chatgpt.png` with your actual screenshot file name.
@@ -35,7 +35,8 @@ Replace `task-1-chatgpt.png` with your actual screenshot file name.
 ## What I Learned (2–3 lines)
 
 Add your answer here...
-
+I learned that Network Protocols are the set of rules that guide how device communicate together , they incluse 
+how to communicate, how to respond, format of the communication, how to know when a message is received, how to den communication
 ---
 
 # 🌐 Task 2: Internet and Networking
@@ -60,6 +61,12 @@ Write a short explanation (**100–150 words**) that includes:
 ## Answer
 
 Add your answer here...
+
+When a user in the USA wants to access EpicReads through the website name, DNS locates the IP address of the server in Finland, which is like the home address of the server.
+The user's request is then broken down into packets. It is a method of breaking down the requested information into smaller chunks instead of sending it as one large piece. It allows the data to take different routes and arrive at the destination, where they are reassembled. This is known as packet switching.
+TCP/IP determines how the user's device and the server communicate. The IP protocol is responsible for routing and addressing the data to the correct destination, while TCP ensures that the data is sent properly and arrives in the required order.
+HTTP/HTTPS allows the browser and EpicReads to communicate. It handles web requests and responses, while HTTPS encrypts the data for secure communication between the user's browser and the server.
+
 
 ---
 
@@ -91,7 +98,8 @@ EpicReads bookstore has two application versions:
 
 Save your diagram image in the `screenshots` folder and update the file name below.
 
-![Application Architecture Diagram](screenshots/task-3-diagram.png)
+![Application Architecture Diagram](screenshots/Frontend.png)
+![alt text](screenshots/Backend.png)
 
 
 Replace `task-3-diagram.png` with your actual diagram file name.
@@ -102,17 +110,23 @@ Replace `task-3-diagram.png` with your actual diagram file name.
 
 ### Frontend
 
-* Add your answer here...
+* Add your answer here... 
+React
+Angular
 * Add your answer here...
 
 ### Backend
 
 * Add your answer here...
+Django
+Flask
 * Add your answer here...
 
 ### Database
 
 * Add your answer here...
+Sqlite
+MySQL
 * Add your answer here...
 
 ---
@@ -143,7 +157,9 @@ In **50–100 words**, explain in your own words:
 ## Answer
 
 Add your answer here...
-
+Every device on the internet has an IP address, and IP addresses are not easy to memorize and remember. That is why domain names are used. It is a human-friendly, readable address for devices on the internet.
+Domain Name System converts that domain name to an IP address that computers use to find and connect to the EpicReads.com server.
+DNS record type A is used to connect because it maps a domain to an IPv4 address.
 ---
 
 # 💻 Task 5: Visual Studio Code Setup (Hands-on)
@@ -178,7 +194,7 @@ ls
 
 Save your screenshot in the `screenshots` folder and update the file name below.
 
-![VS Code Setup Screenshot](screenshots/task-5-vscode.png)
+![VS Code Setup Screenshot](screenshots/vscode.png)
 
 
 Replace `task-5-vscode.png` with your actual screenshot file name.
@@ -219,6 +235,8 @@ Paste your LinkedIn post URL here:
 
 ```text
 Add your URL here...
+
+https://www.linkedin.com/posts/larryson-chijioke-aab710237_dmibypravinmishra-devops-devopsjourney-ugcPost-7493131093483741184-bWAm/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADsEGyMBHFQ25QBObOJBLxT1NuceJxZJOIc
 ```
 
 ---
@@ -229,6 +247,30 @@ Paste the full text of your LinkedIn post here:
 
 Add your post content here...
 
+Week 00 of my DevOps journey
+I’ve started the DMI Foundation Track, and this week I focused on some of the basics I need to understand as I continue learning DevOps.
+Here’s what I worked on:
+
+ChatGPT
+I learned how to use ChatGPT to break down technical concepts and understand them with simple examples. I also learned how to use ChatGPT to debug like a pro and approach technical problems more effectively.
+
+🌐 Internet & Networking
+I learned about networking protocols and how a user can access a website hosted in another country. I covered IP addresses, packet switching, TCP/IP, and HTTP/HTTPS.
+
+Application Architecture
+I learned the difference between two-tier and three-tier architecture and how the frontend, backend, and database interact.
+
+DNS
+I learned how DNS connects a domain name to an IP address, why we use human-readable domain names instead of having to remember IP addresses, and why an A record is used for an IPv4 address.
+
+VS Code
+I set up my VS Code environment and used the integrated terminal to run some basic commands.
+It’s just the beginning, but I’m getting a better understanding of the foundations behind how applications and systems communicate.
+Looking forward to learning more and building on these foundations.
+
+P.S. This post is part of the DevOps Micro Internship (DMI) — Foundation Track — by Pravin Mishra. My graded progress is public: https://lnkd.in/eAxnd7g8 · Start your DevOps journey: https://lnkd.in/etseUhde
+#DMIByPravinMishra #DevOps #DevOpsJourney #Networking
+
 ---
 
 # Reflection – Week 0
@@ -236,13 +278,13 @@ Add your post content here...
 ### What did you find easy?
 
 Add your answer here...
-
+I found understanding the way the internet works  easy, especially the protcols that guide the internet from ip, TCP and UDP , it really set a string foundation for me going forward
 ---
 
 ### What was difficult?
 
 Add your answer here...
-
+Record type still feels a little difficult to grasp the concept
 ---
 
 ### What will you improve next week?
