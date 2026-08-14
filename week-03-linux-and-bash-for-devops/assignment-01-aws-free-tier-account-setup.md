@@ -22,19 +22,27 @@ Demonstrate understanding of AWS basics and Free Tier usage by answering the fol
 
 Write your answer here.
 
+AWS account allows users to access and manage Amazon cloud services.
+We need it at this stage to access the Linux environment by connecting to the AWS cloud using SSH.
 ---
 
 #### Question 2 — What is AWS Free Tier, and how long does it last?
 
 Write your answer here.
-
+AWS Free Tier allows new users to explore and practise using AWS services without paying within the available free limits.
+Currently, new customers receive $100 in credits and can earn up to another $100 by completing activities.
+The Free account plan lasts up to 6 months, or until the credits are used up, whichever comes first.
 ---
 
 #### Question 3 — Name three AWS Free Tier services and their free usage limits.
 
 Write your answer here.
 
+Amazon EC2: 750 hours per month of eligible Linux, RHEL, or SLES t2.micro usage.
+Amazon S3: 5 GB of Standard storage, 20,000 GET requests, and 2,000 PUT requests.
+AWS Lambda: 1 million free requests per month under its Always Free allowance.
 ---
+
 
 # Task 2 — Create AWS Free Tier Account
 
@@ -59,6 +67,7 @@ Confirm that your AWS account setup is complete by navigating to the Account sec
 Add your screenshot here.
 
 ---
+![AWS Setup Screenshot](screenshots/aws.png)
 
 # Submission Instructions
 
