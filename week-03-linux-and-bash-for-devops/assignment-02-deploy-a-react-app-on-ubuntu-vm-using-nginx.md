@@ -23,6 +23,7 @@ Install Node.js and npm on the Ubuntu VM and verify the installation.
 Add your screenshot here.
 
 ---
+![VS Code Setup Screenshot](screenshots/vs.png)
 
 # Task 2 — Setup Environment (Nginx)
 
@@ -37,6 +38,7 @@ Install Nginx, start the service, and confirm it is running.
 Add your screenshot here.
 
 ---
+![Status  Screenshot](screenshots/system.png)
 
 # Task 3 — Clone React Application
 
@@ -51,6 +53,7 @@ Clone the project repository and verify the project files are present.
 Add your screenshot here.
 
 ---
+![VS Code Setup Screenshot](screenshots/system.png)
 
 # Task 4 — Modify Application (Personalization)
 
@@ -65,6 +68,7 @@ Update `App.js` with your full name and the current date.
 Add your screenshot here.
 
 ---
+![VS Code Setup Screenshot](screenshots/rename.png)
 
 # Task 5 — Build React Application
 
@@ -77,6 +81,7 @@ Install dependencies and generate the production build.
 #### Screenshot 5 — Output of `ls` inside `my-react-app` showing the `build/` folder generated
 
 Add your screenshot here.
+![VS Code Setup Screenshot](screenshots/build.png)
 
 ---
 
