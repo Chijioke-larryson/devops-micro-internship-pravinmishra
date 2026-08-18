@@ -98,6 +98,9 @@ Copy the production build files to the Nginx web root directory.
 Add your screenshot here.
 
 ---
+![VS Code Setup Screenshot](screenshots/ls.png)
+
+
 
 # Task 7 — Configure Nginx for React Application
 
@@ -112,6 +115,7 @@ Apply Nginx configuration for React routing and confirm the service is active.
 Add your screenshot here.
 
 ---
+![VS Code Setup Screenshot](screenshots/is.png)
 
 #### Screenshot 8 — Output of `cat /etc/nginx/sites-available/default` showing the Nginx config
 
@@ -132,6 +136,7 @@ Verify the React application is publicly accessible via the server's public IP.
 Add your screenshot here.
 
 ---
+![VS Code Setup Screenshot](screenshots/curl.png)
 
 #### Screenshot 10 — Browser showing the deployed React app at `http://<public-ip>` with your name and date visible
 
@@ -149,6 +154,7 @@ Paste your LinkedIn post URL here:
 
 `Add your URL here`
 
+https://www.linkedin.com/posts/larryson-chijioke-aab710237_dmibypravinmishra-devops-aws-ugcPost-7495623383611658240-C9lT/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADsEGyMBHFQ25QBObOJBLxT1NuceJxZJOIc
 ---
 
 #### Screenshot — LinkedIn post showing the deployed application
@@ -156,6 +162,9 @@ Paste your LinkedIn post URL here:
 Add your screenshot here.
 
 ---
+
+![VS Code Setup Screenshot](screenshots/deploy.png)
+
 
 # Submission Instructions
 
