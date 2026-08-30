@@ -129,18 +129,20 @@ Verify real traffic flow and analyze logs to understand system behavior and erro
 
 Add your screenshot here.
 
+![Error Log status](screenshots/error_log.png)
 ---
 
 #### Screenshot 2 — Output of `sudo tail -n 30 /var/log/nginx/error.log`
 
 Add your screenshot here.
 
----
+
 
 #### Screenshot 3 — Output of `sudo journalctl -u nginx --no-pager -n 50`
 
 Add your screenshot here.
 
+![Error Log status](screenshots/50.png)
 ---
 
 ### Notes
@@ -154,18 +156,40 @@ Answer the following in your own words:
 
 Write your answer here.
 
+Yes. The Nginx error log contained several errors. However, the errors were mainly caused by external clients requesting files or URLs that do not exist on the server.
+
+For example:
+
+open() "/usr/share/nginx/html/.env" failed (2: No such file or directory)
 ---
 
 **2. If there were no errors, what does that indicate about the system?**
 
 Write your answer here.
 
+I noticed only the first error from the previous log entries, while no new critical errors were recorded during my current check. This indicates that Nginx was running normally during the period I analyzed and did not record any new critical issues.
+
+However, this does not mean that the system is permanently perfect. It only means that no new issues were recorded during the specific period I checked.
+---
 ---
 
 **3. Based on the access logs, were your curl requests visible in the log entries? What does that prove about traffic flow?**
 
 Write your answer here.
 
+Yes, my curl requests were visible in the Nginx access log.
+
+I could see HTTP requests such as:
+
+"GET / HTTP/1.1"
+
+with a successful HTTP response status such as:
+
+200
+
+This proves that my curl request successfully reached the EC2 instance, was processed by Nginx, and was recorded in the access log.
+
+Therefore, I verified the traffic flow from my client to the EC2 instance and through the Nginx web server.
 ---
 
 # Task 4 — System Resource Health Check (Capacity Red Flags)
