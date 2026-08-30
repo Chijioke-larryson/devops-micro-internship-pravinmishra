@@ -83,18 +83,20 @@ Verify that Nginx is properly installed, running, enabled at boot, and safely co
 
 Add your screenshot here.
 
+![nginx status](screenshots/no-pager.png)
 ---
 
 #### Screenshot 2 — Output of `sudo nginx -t`
 
 Add your screenshot here.
-
+![test status](screenshots/test.png)
 ---
 
 #### Screenshot 3 — Output of `sudo ss -lptn '( sport = :80 )'`
 
 Add your screenshot here.
 
+![port status](screenshots/pp.png)
 ---
 
 ### Notes
@@ -105,12 +107,14 @@ Answer the following in your own words:
 
 Write your answer here.
 
+Nginx could fail to start automatically after the server reboots if it is not enabled to start at boot. This could make the website unavailable until Nginx is started manually.
 ---
 
 **2. What's your basic rollback plan?**
 
 Write your answer here.
 
+My basic rollback plan would be to restore the previous working configuration, test it, and restart Nginx
 ---
 
 # Task 3 — Logs & Request Trace
