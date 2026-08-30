@@ -21,25 +21,25 @@ Verify that the deployed React application is reachable from the browser and con
 #### Screenshot 1 — Browser showing the React app with your Full Name visible on the UI
 
 Add your screenshot here.
-
+![Browser setup](screenshots/Browser.png)
 ---
 
 #### Screenshot 2 — Output of `ip a`
 
 Add your screenshot here.
-
+![ip  config](screenshots/ip.png)
 ---
 
 #### Screenshot 3 — Output of `sudo ss -tulpen`
 
 Add your screenshot here.
-
+![port status](screenshots/port_status.png)
 ---
 
 #### Screenshot 4 — Output of `sudo ufw status`
 
 Add your screenshot here.
-
+![firewall status](screenshots/stat.png)
 ---
 
 ### Notes
@@ -50,17 +50,24 @@ Answer the following in your own words:
 
 Write your answer here.
 
+1. Nginx is listening at `0.0.0.0:80` because when I ran `sudo ss -tulpen`, the state showed 'LISTEN ', which means the port is active and waiting for connections.
+
 ---
 
 **2. What proves SSH is active on port 22?**
 
 Write your answer here.
 
+SSH is an active port because its state is "LISTEN", meaning it is currently listening for requests on `0.0.0.0:22` when I ran `sudo ss -tulpen`.
+
+
 ---
 
 **3. Did you find any unexpected open ports? Explain briefly.**
 
 Write your answer here.
+
+3. I found port 53 running on `127.0.0.53` and `127.0.0.54`, but these are local DNS resolver ports and are not publicly accessible. I also found `[::]:22`, which is SSH listening on IPv6. Therefore, I did not find any unexpected publicly open ports.
 
 ---
 
