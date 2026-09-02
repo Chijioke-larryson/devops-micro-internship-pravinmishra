@@ -203,25 +203,27 @@ Assess server capacity and detect potential performance or failure risks.
 #### Screenshot 1 — Output of `uptime`
 
 Add your screenshot here.
-
+![uptime status](screenshots/uptime.png)
 ---
 
 #### Screenshot 2 — Output of `free -h`
 
 Add your screenshot here.
-
+![free status](screenshots/free.png)
 ---
 
 #### Screenshot 3 — Output of `df -h`
 
 Add your screenshot here.
-
+![disk free Log status](screenshots/df.png)
 ---
 
 #### Screenshot 4 — Output of `sudo du -sh /var/* | sort -h`
 
 Add your screenshot here.
 
+
+![Disk usage log status](screenshots/sort.png)
 ---
 
 ### Notes
@@ -232,12 +234,25 @@ Answer the following in your own words:
 
 Write your answer here.
 
----
+After reviewing the operational outputs on this EC2 instance:
+
+All system resources currently look healthy and well within safe operational limits. The CPU load average from uptime is below 0.10, showing the processor is idle. Memory from free -h shows adequate available RAM with zero swap usage. Disk usage from df -h sits at a comfortable average of 24%.
+
+However, on an AWS micro-instance (typically 1 GB RAM), Memory (free -h) remains the most critical metric to watch continuously. Because physical RAM is limited, any sudden spike in traffic or memory-heavy process could trigger the Linux OOM (Out Of Memory) Killer, terminating active services like Nginx without warning.
 
 **2. What happens if disk becomes 100% full in a production server?**
 
 Write your answer here.
 
+When disk storage hits 100% (No space left on device), the server experiences cascading operational failures:
+
+Logging Halts: Nginx and system daemons cannot write to /var/log, which causes worker processes to stall, drop connections, or crash.
+
+Process Failures: Applications cannot generate temporary lock files, session files, or PID files in /tmp and /run, causing services to fail on execution or restart.
+
+SSH Admin Lockout: The OpenSSH daemon and PAM modules cannot write session entries (/var/log/lastlog or /var/run/utmp), locking engineers out of terminal access during an active outage.
+
+Data Corruption: Any local databases or persistent state caches terminate write transactions abruptly, risking data inconsistency or table corruption.
 ---
 
 # Task 5 — Configuration & Deployment Verification
