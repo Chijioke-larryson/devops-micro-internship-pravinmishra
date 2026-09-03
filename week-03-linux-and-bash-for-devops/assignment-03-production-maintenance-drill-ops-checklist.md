@@ -266,19 +266,19 @@ Ensure the correct React build is deployed and Nginx is serving it properly.
 #### Screenshot 1 — Output of `ls -lah /var/www/html | head -n 20`
 
 Add your screenshot here.
-
+![head-n  status](screenshots/head-n.png)
 ---
 
 #### Screenshot 2 — Output of `grep -R "Deployed by" -n /var/www/html 2>/dev/null | head`
 
 Add your screenshot here.
-
+![Deployment status](screenshots/grep-R.png)
 ---
 
 #### Screenshot 3 — Output of `grep -n "try_files" /etc/nginx/sites-available/default`
 
 Add your screenshot here.
-
+![tryfiles status](screenshots/try_files.png)
 ---
 
 ### Notes
@@ -288,7 +288,17 @@ Answer the following in your own words:
 **1. How do you confirm that the correct version of the application is deployed?**
 
 Write your answer here.
+I verified the deployment by checking both the server internals and the live browser view:
 
+Checked the web root (ls -lah /var/www/html): I verified that the compiled build files are actually sitting in /var/www/html. The directory contains the production assets (index.html, static/js/, static/css/) rather than development source code, with proper permissions and recent modification timestamps.
+
+Verified the build identifier (grep check): To ensure Nginx isn't serving an outdated build or old cache, I searched the bundled files for my custom release tag:
+
+grep -R "Deployed by" -n /var/www/html 2>/dev/null | head
+
+This confirmed that "Deployed by Larryson Chijioke" is compiled directly inside the active JavaScript bundle.
+
+Checked Nginx routing (grep try_files): I checked /etc/nginx/sites-available/default to ensure Nginx points its root to /var/www/html and includes try_files $uri $uri/ /index.html;. This guarantees that client-side React routes won't throw 404 errors when a user refreshes deep pages.
 ---
 
 # Task 6 — Nginx Configuration Failure Simulation
