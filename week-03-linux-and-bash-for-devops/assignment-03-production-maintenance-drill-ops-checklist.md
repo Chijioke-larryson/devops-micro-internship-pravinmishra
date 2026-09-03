@@ -312,19 +312,19 @@ Simulate a real-world Nginx misconfiguration and recover the service safely.
 #### Screenshot 1 — Output of `sudo nginx -t` showing the syntax error (broken config)
 
 Add your screenshot here.
-
+![test status](screenshots/fail.png)
 ---
 
 #### Screenshot 2 — Output of `sudo nginx -t` showing syntax ok (fixed config)
 
 Add your screenshot here.
-
+![success status](screenshots/success.png)
 ---
 
 #### Screenshot 3 — Output of `curl -I http://<public-ip>` confirming recovery (200 OK)
 
 Add your screenshot here.
-
+![Restart status](screenshots/restart.png)
 ---
 
 ### Notes
@@ -334,19 +334,26 @@ Answer the following in your own words:
 **1. What caused the configuration failure?**
 
 Write your answer here.
-
+he failure was caused by a syntax error in /etc/nginx/sites-available/default. I removed the terminating semicolon (;) from the try_files directive. In Nginx syntax, every directive must end with a semicolon to mark its termination. Without it, the Nginx parser couldn't distinguish where the directive ended and threw an [emerg] syntax error during parsing.
 ---
 
 **2. How did you fix the issue?**
 
 Write your answer here.
 
+I reopened /etc/nginx/sites-available/default using nano, re-added the missing semicolon at the end of the try_files $uri /index.html; directive, and saved the file. Before touching the running service, I verified the fix by running sudo nginx -t. Once it confirmed syntax is ok, I safely restarted the service using sudo systemctl restart nginx and verified the recovery with curl -I.
 ---
 
 **3. How can you avoid this kind of issue in real production systems?**
 
 Write your answer here.
+To prevent bad configuration from taking down production, I would follow three industry best practices:
 
+Never restart without testing: Always run sudo nginx -t before issuing any systemctl reload or restart. If the test fails, do not touch the running daemon.
+
+Prefer reload over restart: Use sudo systemctl reload nginx instead of restart. A reload applies new configurations without dropping active client connections, and Nginx will keep the old configuration running if the new one is invalid.
+
+Automated CI/CD linting & version control: Keep all server blocks and Nginx configuration files in Git. Run automated configuration linters (nginx -t inside a containerized CI runner) to catch typos and syntax mistakes before code ever merges to main or touches a live server.
 ---
 
 # Task 7 — Web Application Failure Simulation
@@ -360,13 +367,15 @@ Simulate missing deployment content and recover the application safely.
 #### Screenshot 1 — Output of `curl -I http://<public-ip>` showing failure (non-200 response)
 
 Add your screenshot here.
-
+![Non-200 status](screenshots/non-200.png)
 ---
 
 #### Screenshot 2 — Output of `curl -I http://<public-ip>` confirming recovery (200 OK)
 
 Add your screenshot here.
 
+
+![successful status](screenshots/200.png)
 ---
 
 ### Notes
@@ -377,18 +386,25 @@ Answer the following in your own words:
 
 Write your answer here
 
+The failure was caused by missing deployment content in the document root directory (/var/www/html). When the live files were moved to a backup directory and replaced with an empty folder, Nginx could no longer find index.html or any compiled assets. Because directory indexing is disabled by default for security, Nginx threw an HTTP 403 Forbidden (or 404 Not Found) error instead of serving the application.
 ---
 
 **2. How did you fix the issue and restore the application?**
 
 Write your answer here.
-
----
+I resolved the incident by performing a quick rollback to our known good state. I removed the empty /var/www/html placeholder directory and moved our backup directory back into place using sudo mv /var/www/html_backup /var/www/html. Once the files were restored, I restarted Nginx with sudo systemctl restart nginx and verified that requests returned an HTTP 200 OK via curl -I-
 
 **3. What steps would you take to prevent this kind of issue in real production systems?**
 
 Write your answer here.
 
+To prevent missing-file outages and broken deployments in production, I would implement:
+
+Atomic Deployments via Symlinks: Instead of overwriting files in-place, deploy new builds into timestamped release folders (e.g., /var/www/releases/v1.2.0) and point /var/www/html to it using a symbolic link (ln -sfn). A switch or rollback is instant and atomic, meaning zero downtime or empty directory windows.
+
+Automated Pre-flight & Post-deployment Smoke Tests: In the CI/CD pipeline, run automated curl checks right after a release. If the endpoint doesn't return a 200 OK with expected DOM elements, trigger an automatic rollback to the previous release.
+
+Immutable Artifacts & Containerization: Package the React build directly into a Docker container image alongside Nginx. This eliminates filesystem discrepancies across servers because the build artifacts are baked directly into the image.
 ---
 
 # Task 8 — Security & Reliability Review
@@ -404,31 +420,45 @@ Answer the following in your own words:
 **1. Why is SSH key-based authentication more secure than sharing passwords?**
 
 Write your answer here.
+Passwords rely on shared secrets that are vulnerable to brute-force attacks, dictionary scans, credential stuffing, and interception. In contrast, SSH key authentication uses asymmetric cryptography (a public key placed on the server and a private key kept securely on the client machine).
 
+The private key never travels over the network during authentication; instead, the server verifies identity through mathematical challenge-response signatures. With modern algorithms (like Ed25519 or RSA 4096-bit), brute-forcing a key is computationally infeasible. Additionally, key access can be individually rotated, revoked, or tied to a hardware token without requiring password changes across an entire team.
 ---
 
 **2. Why should only required ports be open on a production server?**
 
 Write your answer here.
 
+Every open network port represents an active listening service and an entry point into your operating system—expanding your server's attack surface. If an unnecessary port is open (such as an unprotected database port, a debug daemon, or a legacy protocol), any unpatched vulnerability or misconfiguration in that service can allow attackers to gain remote access, inject malware, or execute arbitrary code.
+
+Following the principle of least privilege, a web server should only expose port 80 (HTTP) and port 443 (HTTPS) to the public internet, with port 22 (SSH) strictly firewalled and restricted to specific bastion hosts or administrative IP ranges.
 ---
 
 **3. Why is it important for Nginx to be enabled on boot?**
 
 Write your answer here.
 
+In cloud environments, virtual machines reboot for reasons outside an engineer's manual control—such as underlying hypervisor maintenance, automated kernel security patch reboots, hardware migration, or unexpected kernel panics.
+
+If Nginx is running but not enabled (systemctl enable nginx), the systemd service symlink in /etc/systemd/system/multi-user.target.wants/ will not exist. When the VM comes back online, the OS will boot, but the web server will remain completely dead until an engineer manually logs in to start it. Enabling Nginx on boot ensures automatic self-healing and zero manual intervention during unplanned restarts, maintaining application availability.
 ---
 
 **4. What are the risks of sharing secrets, keys, or credentials publicly?**
 
 Write your answer here.
+Publicly exposing secrets—such as AWS access keys, SSH private keys, database credentials, or API tokens (for instance, by accidentally pushing an .env file to a public GitHub repository)—leads to catastrophic security breaches.
 
+Automated web scrapers and botnets continuously index public repositories within seconds of a commit. Attackers can hijack your cloud account to spin up unauthorized high-compute resources (such as cryptocurrency mining rigs), exfiltrate proprietary customer data, delete production databases, or hold the infrastructure hostage. Once a key is exposed publicly, it must be considered instantly compromised and revoked immediately.
 ---
 
 **5. Why should cloud resources be stopped or terminated when they are no longer needed?**
 
 Write your answer here.
+Unused cloud infrastructure introduces two significant risks:
 
+Financial Waste (Cloud Sprawl): Cloud providers bill continuously for provisioned resources—running EC2 compute hours, attached EBS storage volumes, and allocated Elastic IPs all incur ongoing charges whether they serve traffic or sit completely idle.
+
+Security Blind Spots (Zombie Resources): Forgotten, unmonitored virtual machines are rarely updated or patched. Over time, they accumulate known Common Vulnerabilities and Exposures (CVEs), turning into easy targets for attackers seeking pivot points into your broader virtual private cloud (VPC).
 ---
 
 # LinkedIn Post (Required)
@@ -442,11 +472,12 @@ Paste your LinkedIn post URL here:
 `Add your URL here`
 
 ---
+https://lnkd.in/p/ehUZNNaa
 
 #### Screenshot — Published LinkedIn post
 
 Add your screenshot here.
-
+![Linkedln Post status](screenshots/linkedln1.png)
 ---
 
 # Submission Instructions
